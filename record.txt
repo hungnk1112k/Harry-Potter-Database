@@ -1,0 +1,258 @@
+CREATE TABLE Films (  
+	film_id INT unsigned not null auto_increment,  
+	film_name CHAR(80) not null,  
+	director_name VARCHAR(40) not null, 
+	screenwriter VARCHAR(40) not null,  
+	runtime INT(3) unsigned not null,  
+	year_released YEAR not null, 
+	PRIMARY KEY(film_id) 
+);
+
+CREATE TABLE Characters (
+  	character_name VARCHAR(40) not null,
+	film_first_appearance INT(2) unsigned not null,
+	gender CHAR(6) not null,  house CHAR(10) not null,  
+	species VARCHAR(40) not null,  
+	blood_status VARCHAR(30) not null,
+	DOB DATE;
+	died DATE;  
+	PRIMARY KEY(character_name) 
+);
+
+CREATE TABLE Wands ( 
+	master VARCHAR(40) not null,  
+	wood VARCHAR(20) not null,  
+	core VARCHAR(20) not null,  
+	length FLOAT(4,2) not null,
+	wand_name VARCHAR(20),
+	description VARCHAR(40),
+	PRIMARY KEY(master, wood),  
+	FOREIGN KEY(master) REFERENCES Characters(character_name)
+);
+
+CREATE TABLE Spells (
+	spell_name VARCHAR(40),
+	incantation VARCHAR(30) not null,
+	creator VARCHAR(40);
+	type VARCHAR(15) not null,  
+	first_seen INT(2) not null,  
+	first_seen_used_by VARCHAR(40) not null,  
+	effect VARCHAR(100) not null,  
+	description VARCHAR(400),  
+	PRIMARY KEY(incantation)
+);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released) 
+VALUES ('Harry Potter and the Sorcerer''s Stone’, 'Chris Columbus', 'Steve Kloves', 152, 2001);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released)
+VALUES ('Harry Potter and the Chamber of Secrets', 'Chris Columbus', 'Steve Kloves', 161, 2002);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released)
+VALUES ('Harry Potter and the Prisoner of Azkaban', 'Alfonso Cuarón', 'Steve Kloves', 141, 2004);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released)
+VALUES ('Harry Potter and the Goblet of Fire', 'Mike Newell', 'Steve Kloves', 157, 2005);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released)
+VALUES ('Harry Potter and the Order of the Phoenix', 'David Yates', 'Michael Goldenberg', 138, 2007);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released)
+VALUES ('Harry Potter and the Half-Blood Prince', 'David Yates', 'Steve Kloves', 153, 2009);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released)
+VALUES ('Harry Potter and the Deathly Hallows: Part 1', 'David Yates', 'Steve Kloves', 146, 2010);
+
+INSERT INTO Films(film_name, director_name, screenwriter, runtime, year_released)
+VALUES ('Harry Potter and the Deathly Hallows: Part 2', 'David Yates', 'Steve Kloves', 146, 2011);
+
+
+
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Harry Potter', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Gryffindor','Human', 'Half-blood', '1980-07-31');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Ronald Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Gryffindor','Human', 'Pure-blood', '1980-03-01');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Hermione Granger', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Female', 'Gryffindor','Human', 'Muggle-born', '1979-09-19');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Rubeus Hagrid', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Gryffindor','Half-Human/Half-Giant', 'Part-Human (Half-giant)', '1928-12-06');
+INSERT INTO Characters
+VALUES ('Severus Snape', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Slytherin','Human', 'Half-blood', '1960-01-09', '1998-05-02');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Ginevra Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Female', 'Gryffindor','Human', 'Pure-blood', '1981-08-11');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Neville Longbottom', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Female', 'Gryffindor','Human', 'Pure-blood', '1981-08-11');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Luna Lovegood', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Order of the Phoenix'), 'Female', 'Ravenclaw','Human', 'Pure-blood or Half-blood', '1981-02-13');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, died)
+VALUES ('Albus Dumbledore', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Gryffindor','Human', 'Half-blood', '1997-06-30');
+INSERT INTO Characters
+VALUES ('Sirius Black', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Prisoner of Azkaban'), 'Male', 'Gryffindor','Human', 'Pure-blood', '1959-11-03', '1996-06-18');
+INSERT INTO Characters
+VALUES ('Dobby', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Male', 'None','House-elf', 'None', '28-06-0000', '1998-03-00');
+INSERT INTO Characters
+VALUES ('Alastor Moody', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Male', 'Unknown' ,'Human', 'Pure-blood', '1960-00-00', '1997-07-27');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES ('Arabella Figg', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Female', 'None','Human', 'Squib');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Arthur Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Gryffindor' ,'Human', 'Pure-blood', '1950-02-06');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('William Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Male', 'Gryffindor','Human (Werewolf traits)', 'Pure-blood', '1970-11-29');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Charles Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Male', 'Gryffindor','Human', 'Pure-blood', '1972-12-12');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Dedalus Diggle', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Unknown','Human', 'Pure-blood or Half-blood', '1964-00-00');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES ('Elphias Doge', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Order of the Phoenix'), 'Male', 'Unknown','Human', 'Pure-blood');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES ('Elphias Doge', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Order of the Phoenix'), 'Male', 'Unknown' ,'Human', 'Pure-blood');
+INSERT INTO Characters
+VALUES ('Fred Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Gryffindor','Human', 'Pure-blood', '1978-04-01', '1998-05-02');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('Draco Malfoy', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Slytherin','Human (Ferret)', 'Pure-blood', '1980-06-05');
+INSERT INTO Wands
+VALUES('Draco Malfoy', 'Elder', 'Thestral tail hair', 15.00, 'Elder Wand', 'never wielded');
+INSERT INTO Wands
+VALUES('Albus Dumbledore', 'Elder', 'Thestral tail hair', 15.00, 'Elder Wand', 'never wielded');
+INSERT INTO Wands(master, wood, core, length, wand_name)
+VALUES('Harry Potter', 'Elder', 'Thestral tail hair', 15.00, 'Elder Wand');
+INSERT INTO Characters
+VALUES ('Tom Riddle', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Slytherin','Human', 'Half-blood', '1926-12-31', '1998-05-02');
+INSERT INTO Wands
+VALUES('Tom Riddle', 'Elder', 'Thestral tail hair', 15.00, 'Elder Wand', 'never mastered');
+INSERT INTO Wands(master, wood, core, length, description)
+VALUES('Ronald Weasley', 'Ash', 'Unicorn hair', 12.00, 'inherited');
+INSERT INTO Wands(master, wood, core, length, description)
+VALUES('Charles Weasley', 'Ash', 'Unicorn hair', 12.00, 'former');
+INSERT INTO Wands(master, wood, core, length, description)
+VALUES('Gilderoy Lockhart', 'Ash', 'Unicorn hair', 12.00, 'briefly');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES ('George Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Gryffindor','Human', 'Pure-blood', '1978-04-01');
+(master, wood, core, length, wand_name)
+INSERT INTO Wands(master, wood, core, length, description)
+VALUES('Harry Potter', 'Vine', 'Dragon heartstring', 10.75, 'briefly');
+INSERT INTO Wands(master, wood, core, length, description)
+VALUES('Neville Longbottom', 'Vine', 'Dragon heartstring', 10.75, 'very briefly');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Hermione Granger', 'Vine', 'Dragon heartstring', 10.75);
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Hermione Granger', 'Walnut', 'Dragon heartstring', 12.75);
+INSERT INTO Characters
+VALUES ('Bellatrix Lestrange', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Female', 'Slytherin','Human', 'Pure-blood', '1951-00-00', '1998-05-02');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Bellatrix Lestrange', 'Walnut', 'Dragon heartstring', 12.75);
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES ('Lucius Malfoy', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Male', 'Slytherin','Human', 'Pure-blood');
+INSERT INTO Wands(master, wood, core, length, description)
+VALUES('Lucius Malfoy', 'Elm', 'Dragon heartstring', 18.00, 'formerly');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Tom Riddle', 'Elm', 'Dragon heartstring', 18.00);
+INSERT INTO Wands(master, wood, core, length, description)
+VALUES('Draco Malfoy', 'Elm', 'Dragon heartstring', 18.00, 'presumably');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Harry Potter', 'Hawthorn', 'Unicorn hair', 10.00);
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, died)
+VALUES ('Peter Pettigrew', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Male', 'Gryffindor','Human', 'Pure-blood or Half-blood', '1998-03-00');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Tom Riddle', 'Yew', 'Phoenix feather', 13.50);
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Peter Pettigrew', 'Chestnut', 'Dragon heartstring', 9.25);
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Ronald Weasley', 'Chestnut', 'Dragon heartstring', 9.25);
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES('Gilderoy Lockhart', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Male', 'Ravenclaw','Human', 'Half-blood');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Gilderoy Lockhart', 'Cherry','Dragon heartstring', 9.00);
+INSERT INTO Characters
+VALUES('Remus Lupin', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Prisoner of Azkaban'), 'Male', 'Gryffindor','Werewolf', 'Pure-blood');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Remus Lupin', 'Cypress','Unicorn hair', 10.25);
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES('Vincent Crabbe', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Slytherin','Human', 'Pure-blood');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES('Amycus Carrow', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Half-Blood Prince'), 'Male', 'Unknown','Human', 'Pure-blood or Half-blood');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, died)
+VALUES('Quirinus Quirrell', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Ravenclaw','Human', 'Half-blood', '1992-06-04');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Quirinus Quirrell', 'Alder','Unicorn hair', 9.00);
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES('Dolores Umbridge', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Female', 'Slytherin','Human', 'Half-blood');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Dolores Umbridge', 'Birch','Dragon heartstring', 8.00);
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES('Antonin Dolohov', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Order of the Phoenix'), 'Male', 'Unknown','Human', 'Pure-blood or Half-blood');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status)
+VALUES('Filius Flitwick', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Male', 'Ravenclaw','Human (goblin ancestry)', 'Part-Goblin');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES('Horace Slughorn', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Half-Blood Prince'), 'Male', 'Slytherin','Human', 'Pure-blood or Half-blood', '0000-04-28');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Horace Slughorn', 'Cedar','Dragon heartstring', 10.25);
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES('Molly Weasley', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Female', 'Gryffindor','Human', 'Pure-blood', '1949-10-30');
+INSERT INTO Characters(character_name, film_first_appearance, gender, house, species, blood_status, DOB)
+VALUES('Minerva McGonagall', (SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Female', 'Gryffindor','Human', 'Half-blood', '0000-10-04');
+INSERT INTO Wands(master, wood, core, length)
+VALUES('Minerva McGonagall', 'Fir','Dragon heartstring', 9.50);
+
+
+
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Boggart Banishing Spel', 'Riddikulus','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Prisoner of Azkaban'), 'Harry Potter', 'Turns a Boggart into something amusing', 'A spell used when fighting a Boggart, "Riddikulus" forces the Boggart to take the appearance of an object the caster is focusing on. Best results can be achieved if the caster is focusing on something humorous, with the desire that laughter will weaken the Boggart');
+INSERT INTO Spells
+VALUES('Memory Charm', 'Obliviate', 'Mnemone Radford','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Gilderoy Lockhart', 'Erases memories', 'Erases specific memories');
+INSERT INTO Spells(incantation, creator,type, first_seen, first_seen_used_by, effect, description)
+VALUES('Sectumsempra', 'Severus Snape','Curse',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Order of the Phoenix'), 'Serverus Snape', 'Lacerates target', 'Lacerates the target, as if they have been "slashed by a sword." Subsequently, the target can easily bleed to death from the wounds. This curse was invented by Severus Snape, to be used against his personal enemies.');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Killing Curse' ,'Avada Kedavra','Curse',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Tom Riddle', 'Instantaneous death', 'Causes instantaneous death. It is accompanied by a flash of green light and a rushing noise. There is no known counter-curse that can protect the victim from dying, except for a loving sacrifice. It is one of the three Unforgivable Curses');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Unlocking Charm' ,'Alohomora','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Tom Riddle', 'Unlocks objects', 'Unlocks doors and other objects. It can also unlock doors that have been sealed with a Locking Spell, although it is possible to bewitch doors to become unaffected by this spell');
+INSERT INTO Spells
+VALUES('Wand-Lighting Charm' ,'Lumos', 'Levina Monkstanley','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Harry Potter', 'Illuminates the wand tip', 'Illuminates the tip of the caster''s wand, allowing the caster to see in the dark.');
+INSERT INTO Spells
+VALUES('Disarming Charm' ,'Expelliarmus', 'Elizabeth Smudgling','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Severus Snape', 'Disarms an opponent', 'Forces whatever an opponent is holding to fly out of their hand. It was considered to be Harry Potter''s signature spell');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Patronus Charm' ,'Expecto Patronum','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Prisoner of Azkaban'), 'Remus Lupin', 'Conjures a spirit guardian', 'This charm is a highly powerful and advanced protective spell which will conjure a spirit guardian of their positive emotions to defend against dark creatures; it can also send messages to other witches or wizards. The Patronus takes the form of an animal, unique to each person who casts it. The form of a Patronus can change when one has undergone a period of heightened emotion');
+INSERT INTO Spells
+VALUES('Levitation Charm' ,'Wingardium Leviosa','Jarleth Hobart','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Hermione Granger', 'Makes objects fly', 'Makes objects fly, or levitate');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Full Body-Bind Curse' ,'Petrificus Totalus','Curse',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Hermione Granger', 'Temporary Paralysis', 'Used to temporarily bind the victim''s body in a position much like that of a soldier at attention; the victim will usually fall to the ground');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Cruciatus Curse' ,'Crucio','Curse',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Tom Riddle', 'Excruciating pain', 'Inflicts intense pain on the recipient of the curse. This curse does not physically harm the victim, but may in extreme cases drive them insane. The pain is described as having hot knives being driven into the victim. It cannot be cast successfully by a person who is doing so out of pure spite or anger; one must feel a true desire to cause the victim pain. If one casts this spell, he or she will receive a life sentence in Azkaban prison for it, as with the other two Unforgivable Curses');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Fiendfyre','Curse',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Amycus Carrow', 'Unleashes cursed fire','Unleashes cursed fire that takes the shape of animals that actively seek out living targets and burn anything in its path, including nearly indestructable substances such as horcruxes. In addition, this fire is made even more dangerous due to the fact that it is extremely difficult to control, and cannot be extinguished with normal or enchanted water');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Incarcerous Spell', 'Incarcerous','Conjuration',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Quirinus Quirrell', 'Binds target in ropes','Ties up the target with ropes conjured from thin air');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Inflating Charm', 'Inflatus','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Prisoner of Azkaban'), 'Harry Potter', 'Inflates target','Inflates the target, filling it with air');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Imperius Curse', 'Imperio','Curse',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Harry Potter', 'Mind control','Places the victim completely under the caster''s control. The victim is put into a trance-like state, and becomes very suggestible to the commands of the caster. However, those who are strong willed may learn to resist it. One of the three "Unforgivable Curses," the use of this curse on another human results in capital punishment or life sentence in Azkaban.');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Severing Charm', 'Diffindo','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Sorcerer''s Stone'), 'Filius Flitwick', 'Cuts objects',' Used to precisely cut or tear objects');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Blasting Curse', 'Confringo','Curse',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Deathly Hallows: Part 1'), 'Harry Potter', 'Explosion','Produces a fiery explosion');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Brackium Emendo','Healing',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets '), 'Gilderoy Lockhart', 'Mends bones','If used correctly, it is claimed that this spell will heal broken bones; this theory is supported by the etymology');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Protego Maxima','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Half-Blood Prince'), 'Horace Slughorn', 'Summons a large protective barrier','Protego Maxima is a stronger version of the Shield Charm that, when cast in combination with Fianto Duri and Repello Inimicum, conjures up an almost impregnable magical protection barrier');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Shield Charm', 'Protego','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Gilderoy Lockhart', 'Reflects spells and blocks physical forces','The Shield Charm (Protego) is a charm that protects the caster with an invisible shield that reflects spells and blocks physical entities. Conjurations may sometimes rebound directly off it back towards the caster, or in other cases, may ricochet off in other directions or dissipate as soon as they hit the shield. There are multiple variations of the Shield Charm.');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Protego totalum','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Deathly Hallows: Part 1'), 'Hermione Granger', 'Shields an area','Protego totalum is the incantation of a protective enchantment used to shield a certain area or dwelling for an extended period of time.[1] It is presumably a variation of the Shield Charm, and is used to stop and repel any intruder and/or spell from the protected area, except the most powerful curses, including the Unforgivable Curses.');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Vera Verto','Transfiguration',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Minerva McGonagall','Transforms animals into water goblets', 'Vera Verto is the incantation of a spell used to transform an animal into a water goblet. Animals susceptible to this spell are specifically aves, rodents, and felines');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Snake-Vanishing Spell', 'Vipera Evanesca','Vanishment',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Severus Snape', 'Vanishes snakes','Vanishes snakes. Subsequently, it is the counter-spell for the Snake Summons Spell');
+INSERT INTO Spells(incantation,creator, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Vulnera Sanentur','Severus Snape','Healing',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Severus Snape', 'Slows blood flow, clears residue, knits wounds','Vulnera Sanentur[1] is the song-like incantation of a healing spell and counter-curse to Sectumsempra, both of which were invented by Professor Severus Snape under his alias of the "Half-Blood Prince"');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Freezing Charm', 'Immobulus','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Hermione Granger', 'Stops movement and actions of the target','Immobilises and stops the actions of the target. It works both on living and inanimate things');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('General Counter-Spell', 'Finite Incantatem','Counter-spell',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Severus Snape', 'Terminates all spell effects','Terminates all spell effects in the vicinity of the caster');
+INSERT INTO Spells(spell_name, incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Snake Summons Spell', 'Serpensortia','Conjuration',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Chamber of Secrets'), 'Draco Malfoy', 'Conjures a live snake',' Conjures a serpent from the caster''s wand');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Salvio Hexia','Charm',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Deathly Hallows: Part 1'), 'Hermione Granger', 'Hex deflection','Protects against hexes');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Densaugeo','Hex',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Draco Malfoy', 'Elongates teeth','Densaugeo is the incantation of a hex which causes the teeth to elongate at an alarming rate');
+INSERT INTO Spells(incantation, type, first_seen, first_seen_used_by, effect, description)
+VALUES('Episkey','Healing',(SELECT film_id FROM Films WHERE film_name = 'Harry Potter and the Goblet of Fire'), 'Harry Potter', 'Heals minor injuries','Used to heal relatively minor injuries, such as broken bones and cartilage');
